@@ -11,6 +11,7 @@ CMyGame::CMyGame(void) :
 	insideenemy(false),
 	insideplayer(false),
 	isControls(false),
+	IsTargeting(false),
 	score(0)
 {
 	
@@ -591,7 +592,7 @@ void CMyGame::Spiderbehavior()
 			// add the health drop to the list
 			healthdrops.push_back(healthdrop);
 			pSpider->Delete();
-
+			
 			score += 10;
 			
 			break;
@@ -600,7 +601,7 @@ void CMyGame::Spiderbehavior()
 
 		}
 	}
-	// if spider is inside player reduce players heatlh by 10
+	// if spider is inside player reduce players heatlh by 1
 	for (CSpider* pSpider : m_spiders)
 	{
 		if (insideplayer == true)
@@ -662,7 +663,7 @@ void CMyGame::Shotbehavior()
 			if (pShot->HitTest(pSpider))
 			{
 				pSpider->OnAttacked();
-
+				
 				pShot->Delete();
 				break;
 			}
@@ -693,7 +694,8 @@ void CMyGame::Fixcrash()
 		{
 			insideenemy = true;
 			shotList.delete_all();
-			insideplayer = true;
+			EnemyShotList.delete_all();
+		    insideplayer = true;
 			break;
 		}
 		else
@@ -713,7 +715,7 @@ void CMyGame::healthdropbehavior()
 		if (m_player.HitTest(healthdrop) && m_player.GetHealth() <= 100)
 		{
 			
-			m_player.SetHealth(m_player.GetHealth() + 25);
+			m_player.SetHealth(m_player.GetHealth() + 30);
 			healthdrop->Delete();
 			Healthdropsound.Play("Healthpickup.wav");
 			break;
@@ -731,18 +733,22 @@ void CMyGame::Demobehavior()
 		
 		
 			float distance = Distance(m_player.GetPosition(), pSpider->GetPosition());
-			if (distance < 250.0f)
+			if (distance < 250.0f && !IsTargeting)
 			{
 				m_player.SetEnemyPosition(pSpider->GetPosition());
-				Targetingtimer = 1;
+				Targetingtimer = 80;
+				IsTargeting = true;
 
 
 			}
 			// way of fudging the set enemy position so it effectively resets the position allowing the player to change to the patrol state without having to make a whole new class of spiders
-			if (Targetingtimer == 0)
+			if (pSpider->GetHealth() <= 0 || Targetingtimer == 0)
+			{
+				IsTargeting = false;
+			}
+			if (IsTargeting == false)
 			{
 				m_player.SetEnemyPosition(CVector(2500, 2500));
-				
 				
 			}
 		

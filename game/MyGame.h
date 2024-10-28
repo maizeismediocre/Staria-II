@@ -30,7 +30,7 @@ class CMyGame : public CGame
 	int Targetingtimer;
 	bool insideenemy;
 	bool insideplayer;
-	
+	bool IsTargeting;
 	// menu booleans
 	bool isControls;
 	//sound players
