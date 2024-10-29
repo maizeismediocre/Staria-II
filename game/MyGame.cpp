@@ -93,8 +93,11 @@ void CMyGame::OnUpdate()
 	if (enemycooldown > 0) enemycooldown--;
 	if (Targetingtimer > 0) Targetingtimer--;
 	// deletelist if they are deleted 
-	
-	
+	explosions.delete_if(deleted);
+	m_spiders.delete_if(deleted);
+	shotList.delete_if(deleted);
+	EnemyShotList.delete_if(deleted);
+	healthdrops.delete_if(deleted);
 
 }
 
@@ -611,8 +614,7 @@ void CMyGame::Spiderbehavior()
 			}
 		}
 	}
-	explosions.delete_if(deleted);
-	m_spiders.delete_if(deleted);
+	
 
 }
 
@@ -689,8 +691,7 @@ void CMyGame::Shotbehavior()
 			break;
 		}
 	}
-	shotList.delete_if(deleted);
-	EnemyShotList.delete_if(deleted);
+	
 }
 
 
@@ -700,7 +701,7 @@ void CMyGame::Fixcrash()
 	//if the player is inside an enemy set the inside enemy to true if they aren't set it to false
 	for (CSpider* pSpider : m_spiders)
 	{
-
+		if (pSpider == nullptr) continue;
 		if (m_player.HitTest(pSpider))
 		{
 			insideenemy = true;
@@ -730,7 +731,7 @@ void CMyGame::healthdropbehavior()
 			break;
 		}
 	}
-	healthdrops.delete_if(deleted);
+	
 }
 
 void CMyGame::Demobehavior()
