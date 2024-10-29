@@ -14,7 +14,7 @@ CMyGame::CMyGame(void) :
 	IsTargeting(false),
 	score(0)
 {
-	
+
 }
 
 CMyGame::~CMyGame(void)
@@ -33,29 +33,29 @@ void CMyGame::OnUpdate()
 
 	// Update AI Agents
 	if (m_player.Isdemo == false)
-	{ 
-	if (IsKeyDown(SDLK_w) || IsKeyDown(SDLK_UP)) m_player.Input(CPlayer::UP, false);
-	if(IsKeyDown(SDLK_s) || IsKeyDown(SDLK_DOWN)) m_player.Input(CPlayer::DOWN, false);
-    
-	// rotate left and right
-	if (IsKeyDown(SDLK_a) || IsKeyDown(SDLK_LEFT)) m_player.Input(CPlayer::LEFT, false);
-	if (IsKeyDown(SDLK_d) || IsKeyDown(SDLK_RIGHT)) m_player.Input(CPlayer::RIGHT, false);
-	m_player.Input(CPlayer::NO_DIR, false);
+	{
+		if (IsKeyDown(SDLK_w) || IsKeyDown(SDLK_UP)) m_player.Input(CPlayer::UP, false);
+		if (IsKeyDown(SDLK_s) || IsKeyDown(SDLK_DOWN)) m_player.Input(CPlayer::DOWN, false);
+
+		// rotate left and right
+		if (IsKeyDown(SDLK_a) || IsKeyDown(SDLK_LEFT)) m_player.Input(CPlayer::LEFT, false);
+		if (IsKeyDown(SDLK_d) || IsKeyDown(SDLK_RIGHT)) m_player.Input(CPlayer::RIGHT, false);
+		m_player.Input(CPlayer::NO_DIR, false);
 	}
 	float health = 0;
-	
-	
-	
-	
+
+
+
+
 
 	//game over if the player health is less than or equal to 0
 	if (m_player.GetHealth() <= 0)
 	{
-		
+
 		GameOver();
 	}
-	
-	
+
+
 	//functions
 	Demobehavior();
 	Fixcrash();
@@ -69,11 +69,11 @@ void CMyGame::OnUpdate()
 	Shotbehavior();
 	for (CSprite* pShot : shotList)
 		pShot->Update(t);
-	
+
 	// update health drops here
 	for (CSprite* healthdrop : healthdrops)
 		healthdrop->Update(t);
-	
+
 	//update explosions here
 	for (CSprite* explosion : explosions)
 		explosion->Update(t);
@@ -83,10 +83,10 @@ void CMyGame::OnUpdate()
 	//cooldowns
 	for (CSpider* pSpider : m_spiders)
 	{
-		
-		
-			if (pSpider->shotcooldown > 0) pSpider->shotcooldown--;
-		
+
+
+		if (pSpider->shotcooldown > 0) pSpider->shotcooldown--;
+
 	}
 	// player shot cooldown
 	if (m_player.shotcooldown > 0) m_player.shotcooldown--;
@@ -97,7 +97,7 @@ void CMyGame::OnUpdate()
 	EnemyShotList.delete_if(deleted);
 	explosions.delete_if(deleted);
 	m_spiders.delete_if(deleted);
-	
+
 }
 
 void DrawHealth(CGraphics* g, CVector pos, float w, float h, float health)
@@ -112,7 +112,7 @@ void CMyGame::OnDraw(CGraphics* g)
 	// Draw background
 	for (int i = 0; i < 5; i++)
 		for (int j = 0; j < 3; j++)
-			g->Blit(CVector(256.f*i, 256.f *j), m_background);
+			g->Blit(CVector(256.f * i, 256.f * j), m_background);
 
 	m_player.Draw(g);
 	DrawHealth(g, m_player.GetPosition() + CVector(-32, 32), 20, 4, m_player.GetHealth());
@@ -174,14 +174,14 @@ void CMyGame::OnDraw(CGraphics* g)
 			Exitbutton.Draw(g);
 
 		}
-		
+
 
 	}
 	// pause menu
 	if (IsPaused() && !IsMenuMode())
 	{
 		ShowMouse();
-		*g << font(48) << color(CColor::Red()) << xy(730,700) << "PAUSED" << endl;
+		*g << font(48) << color(CColor::Red()) << xy(730, 700) << "PAUSED" << endl;
 		Quitbutton.SetPosition(640, 300);
 		Quitbutton.Draw(g);
 		MenuButton.SetPosition(640, 600);
@@ -211,12 +211,12 @@ void CMyGame::OnDraw(CGraphics* g)
 
 // one time initialisation
 void CMyGame::OnInitialize()
-{	
+{
 	m_player.Isdemo = false;
 	//menu images 
 	Explaination.LoadImage("Explaination.bmp");
 	Explaination.SetImage("Explaination.bmp");
-	
+
 	Startscreen.LoadImage("startscreen.bmp");
 	Startscreen.SetImage("startscreen.bmp");
 	Controls.LoadImage("Controls.bmp");
@@ -260,20 +260,20 @@ void CMyGame::OnDisplayMenu()
 	GameMusic.Stop();
 	Startscreen.SetPosition(640, 384);
 	Controls.SetPosition(640, 384);
-	MenuMusic.Play("menumusic.wav",-1);
+	MenuMusic.Play("menumusic.wav", -1);
 	isControls = false;
 
-	
+
 }
 
 // called when a new game is started
 // as a second phase after a menu or a welcome screen
 void CMyGame::OnStartGame()
 {
-	
-	
+
+
 	MenuMusic.Stop();
-	GameMusic.Play("gamemusic.wav",-1);
+	GameMusic.Play("gamemusic.wav", -1);
 	insideenemy = false;
 	score = 0;
 	m_spiders.delete_all();
@@ -287,10 +287,10 @@ void CMyGame::OnStartGame()
 	m_player.SetRotation(0);
 	m_player.SetSpeed(0);
 	m_player.SetPosition(640, 384);
-	
+
 	m_player.SetHealth(100);
 	m_player.ChangeState(CPlayer::IDLE, CPlayer::DOWN);
-	
+
 	if (m_player.Isdemo == true)
 	{
 		m_player.ChangeDemoState(CPlayer::IDLE);
@@ -300,7 +300,7 @@ void CMyGame::OnStartGame()
 // called when a new level started - first call for nLevel = 1
 void CMyGame::OnStartLevel(Sint16 nLevel)
 {
-	
+
 }
 
 // called when the game is over
@@ -335,7 +335,7 @@ void CMyGame::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode)
 
 	if (sym == SDLK_F2)
 		NewGame();
-	
+
 }
 
 void CMyGame::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
@@ -345,11 +345,11 @@ void CMyGame::OnKeyUp(SDLKey sym, SDLMod mod, Uint16 unicode)
 /////////////////////////////////////////////////////
 // Mouse Events Handlers
 
-void CMyGame::OnMouseMove(Uint16 x,Uint16 y,Sint16 relx,Sint16 rely,bool bLeft,bool bRight,bool bMiddle)
+void CMyGame::OnMouseMove(Uint16 x, Uint16 y, Sint16 relx, Sint16 rely, bool bLeft, bool bRight, bool bMiddle)
 {
 }
 
-void CMyGame::OnLButtonDown(Uint16 x,Uint16 y)
+void CMyGame::OnLButtonDown(Uint16 x, Uint16 y)
 {
 	//menu behaviours 
 	if (IsMenuMode())
@@ -382,7 +382,7 @@ void CMyGame::OnLButtonDown(Uint16 x,Uint16 y)
 				{
 					m_player.Isdemo = true;
 					Demo.SetImage("DemoOn.bmp");
-				
+
 				}
 				else
 				{
@@ -401,17 +401,17 @@ void CMyGame::OnLButtonDown(Uint16 x,Uint16 y)
 					{
 						m_player.IsOverDrive = true;
 						OverDrive.SetImage("OverdriveOn.bmp");
-						
+
 					}
 					else
 					{
 						m_player.IsOverDrive = false;
 						OverDrive.SetImage("OverdriveOff.bmp");
-						
+
 					}
 				}
 			}
-			
+
 		}
 		if (isControls == true)
 		{
@@ -437,23 +437,23 @@ void CMyGame::OnLButtonDown(Uint16 x,Uint16 y)
 	}
 }
 
-void CMyGame::OnLButtonUp(Uint16 x,Uint16 y)
+void CMyGame::OnLButtonUp(Uint16 x, Uint16 y)
 {
 }
 
-void CMyGame::OnRButtonDown(Uint16 x,Uint16 y)
+void CMyGame::OnRButtonDown(Uint16 x, Uint16 y)
 {
 }
 
-void CMyGame::OnRButtonUp(Uint16 x,Uint16 y)
+void CMyGame::OnRButtonUp(Uint16 x, Uint16 y)
 {
 }
 
-void CMyGame::OnMButtonDown(Uint16 x,Uint16 y)
+void CMyGame::OnMButtonDown(Uint16 x, Uint16 y)
 {
 }
 
-void CMyGame::OnMButtonUp(Uint16 x,Uint16 y)
+void CMyGame::OnMButtonUp(Uint16 x, Uint16 y)
 {
 }
 
@@ -538,41 +538,41 @@ void CMyGame::Spiderbehavior()
 			{
 				spawnPos = CVector(rand() % 600 + 200, rand() % 300 + 200);
 				distance = Distance(playerPos, spawnPos);
-			} while (distance < 300.0f);
+			} while (distance < 300.0f && distance > 400.0f);
 
 			m_spiders.push_back(new CSpider(spawnPos.m_x, spawnPos.m_y, "enemy1.png", 0));
 			enemycooldown = 160; // around 4 seconds
 		}
 	}
 
-		if (m_player.IsOverDrive == true)
+	if (m_player.IsOverDrive == true)
+	{
+		if (m_spiders.size() < 10 && enemycooldown == 0)
 		{
-			if (m_spiders.size() < 10 && enemycooldown == 0)
+			CVector playerPos = m_player.GetPosition();
+			CVector spawnPos;
+			float distance;
+
+			do
 			{
-				CVector playerPos = m_player.GetPosition();
-				CVector spawnPos;
-				float distance;
+				spawnPos = CVector(rand() % 600 + 200, rand() % 300 + 200);
+				distance = Distance(playerPos, spawnPos);
+			} while (distance < 300.0f && distance > 400.0f);
 
-				do
-				{
-					spawnPos = CVector(rand() % 600 + 200, rand() % 300 + 200);
-					distance = Distance(playerPos, spawnPos);
-				} while (distance < 300.0f);
-
-				m_spiders.push_back(new CSpider(spawnPos.m_x, spawnPos.m_y, "enemy1.png", 0));
-				enemycooldown = 80; //around 2 seconds
-			}
+			m_spiders.push_back(new CSpider(spawnPos.m_x, spawnPos.m_y, "enemy1.png", 0));
+			enemycooldown = 80; //around 2 seconds
 		}
+	}
 
-	
-	
-	
+
+
+
 	//when a spider dies add 10 points to the score		
 	for (CSpider* pSpider : m_spiders)
 	{
 		if (pSpider->GetHealth() <= 0)
 		{
-			
+
 			// create explosion animation where the spider died
 			CSprite* pExplosion = new CSprite(pSpider->GetX(), pSpider->GetY(), 0, 0, GetTime());
 			pExplosion->AddImage("Explosion.png", "explode", 12, 1, 0, 0, 11, 0);
@@ -584,7 +584,7 @@ void CMyGame::Spiderbehavior()
 			explosions.push_back(pExplosion);
 			// play explosion sound
 			explosionsound.Play("explosion.wav");
-		
+
 			//create health 1 health drop where the spider died
 			CSprite* healthdrop = new CSprite(pSpider->GetX(), pSpider->GetY(), 0, 0, GetTime());
 			healthdrop->AddImage("health.png", "healthdrop", 5, 1, 0, 0, 4, 0);
@@ -592,25 +592,29 @@ void CMyGame::Spiderbehavior()
 			// add the health drop to the list
 			healthdrops.push_back(healthdrop);
 			pSpider->Delete();
-			
+
 			score += 10;
-			
+
 			break;
-			
-			
+
+
 
 		}
 	}
 	// if spider is inside player reduce players heatlh by 1
-	for (CSpider* pSpider : m_spiders)
+	if (m_player.Isdemo == false)
 	{
-		if (insideplayer == true)
+		for (CSpider* pSpider : m_spiders)
 		{
-			m_player.SetHealth(m_player.GetHealth() - 1);
-			break;
+			if (insideplayer == true)
+			{
+				m_player.SetHealth(m_player.GetHealth() - 1);
+				break;
+			}
 		}
 	}
-	
+
+
 }
 
 void CMyGame::Shotbehavior()
@@ -663,7 +667,7 @@ void CMyGame::Shotbehavior()
 			if (pShot->HitTest(pSpider))
 			{
 				pSpider->OnAttacked();
-				
+
 				pShot->Delete();
 				break;
 			}
@@ -680,7 +684,7 @@ void CMyGame::Shotbehavior()
 			break;
 		}
 	}
-	
+
 }
 
 
@@ -690,12 +694,11 @@ void CMyGame::Fixcrash()
 	//if the player is inside an enemy set the inside enemy to true if they aren't set it to false
 	for (CSpider* pSpider : m_spiders)
 	{
+
 		if (m_player.HitTest(pSpider))
 		{
 			insideenemy = true;
-			shotList.delete_all();
-			EnemyShotList.delete_all();
-		    insideplayer = true;
+			insideplayer = true;
 			break;
 		}
 		else
@@ -704,7 +707,7 @@ void CMyGame::Fixcrash()
 			insideplayer = false;
 		}
 	}
-	
+
 }
 
 void CMyGame::healthdropbehavior()
@@ -714,7 +717,7 @@ void CMyGame::healthdropbehavior()
 	{
 		if (m_player.HitTest(healthdrop) && m_player.GetHealth() <= 100)
 		{
-			
+
 			m_player.SetHealth(m_player.GetHealth() + 30);
 			healthdrop->Delete();
 			Healthdropsound.Play("Healthpickup.wav");
@@ -730,76 +733,76 @@ void CMyGame::Demobehavior()
 
 	for (CSpider* pSpider : m_spiders)
 	{
-		
-		
-			float distance = Distance(m_player.GetPosition(), pSpider->GetPosition());
-			if (distance < 250.0f && !IsTargeting)
-			{
-				m_player.SetEnemyPosition(pSpider->GetPosition());
-				Targetingtimer = 80;
-				IsTargeting = true;
 
 
-			}
-			// way of fudging the set enemy position so it effectively resets the position allowing the player to change to the patrol state without having to make a whole new class of spiders
-			if (pSpider->GetHealth() <= 0 || Targetingtimer == 0)
-			{
-				IsTargeting = false;
-			}
-			if (IsTargeting == false)
-			{
-				m_player.SetEnemyPosition(CVector(2500, 2500));
-				
-			}
-		
-		
+		float distance = Distance(m_player.GetPosition(), pSpider->GetPosition());
+		if (distance < 250.0f && !IsTargeting)
+		{
+			m_player.SetEnemyPosition(pSpider->GetPosition());
+			Targetingtimer = 80;
+			IsTargeting = true;
+
+
+		}
+		// way of fudging the set enemy position so it effectively resets the position allowing the player to change to the patrol state without having to make a whole new class of spiders
+		if (pSpider->GetHealth() <= 0 || Targetingtimer == 0)
+		{
+			IsTargeting = false;
+		}
+		if (IsTargeting == false)
+		{
+			m_player.SetEnemyPosition(CVector(2500, 2500));
+
+		}
+
+
 	}
 	// if the players case is attack or chase 
-	
-		if (m_player.GetState() == CPlayer::ATTACK && insideenemy == false)
+
+	if (m_player.GetState() == CPlayer::ATTACK && insideenemy == false)
+	{
+		// add player cool down here
+		if (m_player.shotcooldown == 0)
 		{
-			// add player cool down here
-			if (m_player.shotcooldown == 0)
 			{
+
+				CSprite* newShot = new CSprite(m_player.GetX(), m_player.GetY(), 0, 0, GetTime());
+				// set the motion of the new shot sprite
+				newShot->AddImage("shot.png", "shot1", 10, 1, 0, 0, 9, 0);
+				newShot->SetAnimation("shot1", 12);
+				newShot->SetDirection(m_player.GetRotation());
+				newShot->SetRotation(m_player.GetRotation());
+				//if overdrive is on set the speed of the shot to 600
+				if (m_player.IsOverDrive == true)
+				{
+					newShot->SetSpeed(1000);
+				}
+				//if overdrive is off set the speed of the shot to 500
+				if (m_player.IsOverDrive == false)
+				{
+					newShot->SetSpeed(500);
+				}
+
+				// add the shot sprite to the list
+				shotList.push_back(newShot);
+				// play shot sound
+				m_player.shotSound.Play("shot.wav");
+				// if overdrive is off set the shot cooldown to 30
+				if (m_player.IsOverDrive == false)
+				{
+					m_player.shotcooldown = 15; // just under half a second
+				}
+				// if overdrive is on set the shot cooldown to 15
+				if (m_player.IsOverDrive == true)
 				{
 
-					CSprite* newShot = new CSprite(m_player.GetX(), m_player.GetY(), 0, 0, GetTime());
-					// set the motion of the new shot sprite
-					newShot->AddImage("shot.png", "shot1", 10, 1, 0, 0, 9, 0);
-					newShot->SetAnimation("shot1", 12);
-					newShot->SetDirection(m_player.GetRotation());
-					newShot->SetRotation(m_player.GetRotation());
-					//if overdrive is on set the speed of the shot to 600
-					if (m_player.IsOverDrive == true)
-					{
-						newShot->SetSpeed(1000);
-					}
-					//if overdrive is off set the speed of the shot to 500
-					if (m_player.IsOverDrive == false)
-					{
-						newShot->SetSpeed(500);
-					}
-					
-					// add the shot sprite to the list
-					shotList.push_back(newShot);
-					// play shot sound
-					m_player.shotSound.Play("shot.wav");
-					// if overdrive is off set the shot cooldown to 30
-					if (m_player.IsOverDrive == false)
-					{
-						m_player.shotcooldown = 15; // just under half a second
-					}
-					// if overdrive is on set the shot cooldown to 15
-					if (m_player.IsOverDrive == true)
-					{
-
-						m_player.shotcooldown = 8; // just under half a second
-					}
-
+					m_player.shotcooldown = 1; // just under half a second
 				}
+
 			}
 		}
-	
+	}
+
 
 
 
@@ -808,14 +811,14 @@ void CMyGame::Demobehavior()
 		if (m_player.GetState() == CPlayer::ATTACK)
 		{
 			float distance = Distance(m_player.GetPosition(), pSpider->GetPosition());
-			if (distance <= 250.0f)
+			if (distance <= 250.0f && IsTargeting == true)
 			{
 				m_player.SetDirection(pSpider->GetPosition() - m_player.GetPosition());
 				m_player.SetRotation(m_player.GetDirection());
 			}
 		}
 	}
-	
+
 	// if there are health packs and the case is patrol then move towards the health pack
 	for (CSprite* healthdrop : healthdrops)
 	{
@@ -835,10 +838,11 @@ void CMyGame::Demobehavior()
 				m_player.SetHealth(m_player.GetHealth() - 20);
 				m_player.SetPosition(640, 384);
 				hitsound.Play("playerhit.wav");
+				m_player.SetEnemyPosition(CVector(2500, 2500));
 				insideenemy = false;
 				break;
 			}
 		}
 	}
-	
+
 }
