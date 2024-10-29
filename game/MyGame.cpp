@@ -93,10 +93,8 @@ void CMyGame::OnUpdate()
 	if (enemycooldown > 0) enemycooldown--;
 	if (Targetingtimer > 0) Targetingtimer--;
 	// deletelist if they are deleted 
-	shotList.delete_if(deleted);
-	EnemyShotList.delete_if(deleted);
-	explosions.delete_if(deleted);
-	m_spiders.delete_if(deleted);
+	
+	
 
 }
 
@@ -613,7 +611,8 @@ void CMyGame::Spiderbehavior()
 			}
 		}
 	}
-
+	explosions.delete_if(deleted);
+	m_spiders.delete_if(deleted);
 
 }
 
@@ -662,10 +661,14 @@ void CMyGame::Shotbehavior()
 	// check for collisions between shots and spiders 
 	for (CSprite* pShot : shotList)
 	{
+		if (pShot == nullptr) continue;
 		for (CSpider* pSpider : m_spiders)
 		{
+			
+			if (pShot == nullptr) continue;
 			if (pShot->HitTest(pSpider))
 			{
+
 				pSpider->OnAttacked();
 
 				pShot->Delete();
@@ -676,15 +679,18 @@ void CMyGame::Shotbehavior()
 	// check for collisions between shots and player
 	for (CSprite* EShot : EnemyShotList)
 	{
+		if (EShot == nullptr) continue;
 		if (EShot->HitTest(&m_player))
 		{
+
 			m_player.OnAttacked();
 			hitsound.Play("playerhit.wav");
 			EShot->Delete();
 			break;
 		}
 	}
-
+	shotList.delete_if(deleted);
+	EnemyShotList.delete_if(deleted);
 }
 
 
