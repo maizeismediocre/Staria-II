@@ -844,8 +844,9 @@ void CMyGame::Demobehavior()
 				m_player.SetHealth(m_player.GetHealth() - 20);
 				m_player.SetPosition(640, 384);
 				hitsound.Play("playerhit.wav");
-				m_player.SetEnemyPosition(CVector(2500, 2500));
+				
 				insideenemy = false;
+				IsTargeting = false;
 				break;
 			}
 		}
