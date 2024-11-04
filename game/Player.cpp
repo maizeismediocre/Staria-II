@@ -204,7 +204,7 @@ void CPlayer::ChangeDemoState(STATE newState)
 		switch (state)
 		{
 		case IDLE:
-			SetVelocity(0, 0);
+			
 			break;
 
 		case PATROL:
