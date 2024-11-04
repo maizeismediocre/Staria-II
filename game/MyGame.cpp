@@ -663,32 +663,44 @@ void CMyGame::Shotbehavior()
 	// check for collisions between shots and spiders 
 	for (CSprite* pShot : shotList)
 	{
-		if (pShot == nullptr) continue;
+		
 		for (CSpider* pSpider : m_spiders)
 		{
 			
-			if (pShot == nullptr) continue;
-			if (pShot->HitTest(pSpider))
+			if (pShot->GetGraphics() == nullptr)
 			{
+				
+				continue;
+			}
+			
+			if(insideenemy == false)
+			{ 
 
-				pSpider->OnAttacked();
+				if (pShot->HitTest(pSpider))
+				{
 
-				pShot->Delete();
-				break;
+					pSpider->OnAttacked();
+
+					pShot->Delete();
+					break;
+				}
 			}
 		}
 	}
 	// check for collisions between shots and player
 	for (CSprite* EShot : EnemyShotList)
 	{
-		if (EShot == nullptr) continue;
-		if (EShot->HitTest(&m_player))
+		if (EShot->GetGraphics() == nullptr) continue;
+		if (insideplayer == false)
 		{
+			if (EShot->HitTest(&m_player))
+			{
 
-			m_player.OnAttacked();
-			hitsound.Play("playerhit.wav");
-			EShot->Delete();
-			break;
+				m_player.OnAttacked();
+				hitsound.Play("playerhit.wav");
+				EShot->Delete();
+				break;
+			}
 		}
 	}
 	
@@ -701,7 +713,7 @@ void CMyGame::Fixcrash()
 	//if the player is inside an enemy set the inside enemy to true if they aren't set it to false
 	for (CSpider* pSpider : m_spiders)
 	{
-		if (pSpider == nullptr) continue;
+		if (pSpider->GetGraphics() == nullptr) continue;
 		if (m_player.HitTest(pSpider))
 		{
 			insideenemy = true;
@@ -722,6 +734,11 @@ void CMyGame::healthdropbehavior()
 	//if the player collides with a health drop increase the players health by 30 and delete the health drop
 	for (CSprite* healthdrop : healthdrops)
 	{
+		if (healthdrop->GetGraphics() == nullptr)
+		{
+
+			continue;
+		}
 		if (m_player.HitTest(healthdrop) && m_player.GetHealth() <= 100)
 		{
 
@@ -803,7 +820,7 @@ void CMyGame::Demobehavior()
 				if (m_player.IsOverDrive == true)
 				{
 
-					m_player.shotcooldown = 1; // just under half a second
+					m_player.shotcooldown = 1; // just under half a second 
 				}
 
 			}
@@ -829,6 +846,7 @@ void CMyGame::Demobehavior()
 	// if there are health packs and the case is patrol then move towards the health pack
 	for (CSprite* healthdrop : healthdrops)
 	{
+
 		if (m_player.GetState() == CPlayer::PATROL && m_player.GetHealth() <= 100)
 		{
 			m_player.SetDirection(healthdrop->GetPosition() - m_player.GetPosition());
