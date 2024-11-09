@@ -64,22 +64,29 @@ void CMyGame::OnUpdate()
 	// update sprites
 	m_player.Update(t);
 	for (CSpider* pSpider : m_spiders)
+	{
 		pSpider->Update(t);
+	}
 	// update player shots here 
 	Shotbehavior();
 	for (CSprite* pShot : shotList)
+	{
 		pShot->Update(t);
-
+	}
 	// update health drops here
 	for (CSprite* healthdrop : healthdrops)
+	{
 		healthdrop->Update(t);
-
+	}
 	//update explosions here
 	for (CSprite* explosion : explosions)
-		explosion->Update(t);
+	{
+	}
 	// update enemy shots here
 	for (CSprite* pShot : EnemyShotList)
+	{
 		pShot->Update(t);
+	}
 	//cooldowns
 	for (CSpider* pSpider : m_spiders)
 	{
@@ -539,7 +546,7 @@ void CMyGame::Spiderbehavior()
 			{
 				spawnPos = CVector(rand() % 600 + 200, rand() % 300 + 200);
 				distance = Distance(playerPos, spawnPos);
-			} while (distance < 300.0f || distance > 400.0f);
+			} while (distance < 300.0f);
 
 			m_spiders.push_back(new CSpider(spawnPos.m_x, spawnPos.m_y, "enemy1.png", 0));
 			enemycooldown = 160; // around 4 seconds
@@ -558,7 +565,7 @@ void CMyGame::Spiderbehavior()
 			{
 				spawnPos = CVector(rand() % 600 + 200, rand() % 300 + 200);
 				distance = Distance(playerPos, spawnPos);
-			} while (distance < 300.0f || distance > 400.0f);
+			} while (distance < 300.0f)	;
 
 			m_spiders.push_back(new CSpider(spawnPos.m_x, spawnPos.m_y, "enemy1.png", 0));
 			enemycooldown = 80; //around 2 seconds
@@ -663,10 +670,10 @@ void CMyGame::Shotbehavior()
 	// check for collisions between shots and spiders 
 	for (CSprite* pShot : shotList)
 	{
-		
+		if (pShot == nullptr) continue;
 		for (CSpider* pSpider : m_spiders)
 		{
-			
+			if (pShot == nullptr) continue;
 			if (pShot->GetGraphics() == nullptr)
 			{
 				
@@ -691,6 +698,7 @@ void CMyGame::Shotbehavior()
 	for (CSprite* EShot : EnemyShotList)
 	{
 		if (EShot->GetGraphics() == nullptr) continue;
+		if (EShot == nullptr) continue;
 		if (insideplayer == false)
 		{
 			if (EShot->HitTest(&m_player))
@@ -714,6 +722,7 @@ void CMyGame::Fixcrash()
 	for (CSpider* pSpider : m_spiders)
 	{
 		if (pSpider->GetGraphics() == nullptr) continue;
+		if (pSpider == nullptr) continue;
 		if (m_player.HitTest(pSpider))
 		{
 			insideenemy = true;
@@ -737,6 +746,10 @@ void CMyGame::healthdropbehavior()
 		if (healthdrop->GetGraphics() == nullptr)
 		{
 
+			continue;
+		}
+		if (healthdrop == nullptr)
+		{
 			continue;
 		}
 		if (m_player.HitTest(healthdrop) && m_player.GetHealth() <= 100)
