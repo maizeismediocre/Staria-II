@@ -539,7 +539,7 @@ void CMyGame::Spiderbehavior()
 			{
 				spawnPos = CVector(rand() % 600 + 200, rand() % 300 + 200);
 				distance = Distance(playerPos, spawnPos);
-			} while (distance < 300.0f && distance > 400.0f);
+			} while (distance < 300.0f || distance > 400.0f);
 
 			m_spiders.push_back(new CSpider(spawnPos.m_x, spawnPos.m_y, "enemy1.png", 0));
 			enemycooldown = 160; // around 4 seconds
@@ -558,7 +558,7 @@ void CMyGame::Spiderbehavior()
 			{
 				spawnPos = CVector(rand() % 600 + 200, rand() % 300 + 200);
 				distance = Distance(playerPos, spawnPos);
-			} while (distance < 300.0f && distance > 400.0f);
+			} while (distance < 300.0f || distance > 400.0f);
 
 			m_spiders.push_back(new CSpider(spawnPos.m_x, spawnPos.m_y, "enemy1.png", 0));
 			enemycooldown = 80; //around 2 seconds
