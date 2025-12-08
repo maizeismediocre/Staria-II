@@ -9,4 +9,4 @@ assets used:
 -	Sound effects used - https://jalastram.itch.io/500-sound-effects 
 - Sound effects from "Souptonic SFX Pack 1 - UI Sounds" by Souptonic (https://souptonic.itch.io/souptonic-sfx-pack-1-ui-sounds), licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
 -	Menu music https://www.youtube.com/watch?v=Hz6KO0gnrS8
--	Game music https://www.youtube.com/watch?v=YKVmXn-Gv0M
+-	Game music from "Space Station 13 Music - Title3" by Hugo (https://www.youtube.com/watch?v=YKVmXn-Gv0M), licensed under CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/).
