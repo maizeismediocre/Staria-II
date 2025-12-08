@@ -7,6 +7,6 @@ assets used:
 -	Font - https://www.dafont.com/vermin-vibes-1989.font
 -	Main menu ship - https://www.pixilart.com/art/galaga-ship-2d5e91fc43d1cb4
 -	Sound effects used - https://jalastram.itch.io/500-sound-effects 
--	More sound effects- https://souptonic.itch.io/souptonic-sfx-pack-1-ui-sounds (licensed under CC BY 4.0.) https://creativecommons.org/licenses/by/4.0/
+- Sound effects from "Souptonic SFX Pack 1 - UI Sounds" by Souptonic (https://souptonic.itch.io/souptonic-sfx-pack-1-ui-sounds), licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).
 -	Menu music https://www.youtube.com/watch?v=Hz6KO0gnrS8
 -	Game music https://www.youtube.com/watch?v=YKVmXn-Gv0M
